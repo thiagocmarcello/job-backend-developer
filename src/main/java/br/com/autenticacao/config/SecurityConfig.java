@@ -39,10 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] permitAll = {"/*", "/static/**", "/oauth/authorize", "/oauth/confirm_access"};
+
         http.authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
-                .and().httpBasic()
-                .and().csrf().disable();
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .and()
+                .requestMatchers()
+                .antMatchers(permitAll)
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .and()
+                .csrf().disable();
     }
 
     @Bean
@@ -55,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedHeader("Authorization, Origin, X-Requested-With, Content-Type, Accept");
+        config.addAllowedMethod("POST, PUT, GET, OPTIONS, DELETE");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));

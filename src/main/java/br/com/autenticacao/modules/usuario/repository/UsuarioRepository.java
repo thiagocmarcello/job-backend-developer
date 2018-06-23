@@ -10,4 +10,6 @@ public interface UsuarioRepository extends PagingAndSortingRepository<Usuario, I
         QueryDslPredicateExecutor<Usuario> {
 
     Optional<Usuario> findByEmail(String email);
+
+    Optional<Usuario> findById(Integer id);
 }
