@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    database: HSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+  datasource:
+    url:
+    jdbcUrl: jdbc:hsqldb:hsql://localhost/autenticacao
+    username: sa
+    password:
+    driverClassName: org.hsqldb.jdbcDriver
