@@ -18,7 +18,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private static final String GRANT_TYPE = "password";
+    private static final String GRANT_TYPE_PASSWORD = "password";
+    private static final String GRANT_TYPE_CLIENT = "client_credentials";
     private static final String[] SCOPE = {"read", "write", "trust"};
     private static final int UM_DIA_EM_SEGUNDOS = 86400;
 
@@ -53,13 +54,13 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
         clients.inMemory()
                 .withClient(appClient)
                 .secret(appClientPassword)
-                .authorizedGrantTypes(GRANT_TYPE)
+                .authorizedGrantTypes(GRANT_TYPE_PASSWORD)
                 .scopes(SCOPE)
                 .accessTokenValiditySeconds(UM_DIA_EM_SEGUNDOS)
                 .and()
                 .withClient(apiClient)
                 .secret(apiClientPassword)
-                .authorizedGrantTypes(GRANT_TYPE)
+                .authorizedGrantTypes(GRANT_TYPE_CLIENT)
                 .scopes(SCOPE)
                 .accessTokenValiditySeconds(UM_DIA_EM_SEGUNDOS);
     }

@@ -33,4 +33,23 @@ public class TestsHelper {
             return new OAuthToken();
         }
     }
+
+    public static OAuthToken getAccessTokenClientCredentials(MockMvc mvc, String app) {
+        try {
+            MockHttpServletResponse response = mvc
+                    .perform(
+                            post("/oauth/token")
+                                    .header("Authorization", "Basic "
+                                            + new String(Base64Utils.encode((app).getBytes())))
+                                    .param("grant_type", "client_credentials"))
+                    .andReturn().getResponse();
+
+            return new ObjectMapper()
+                    .readValue(response.getContentAsByteArray(), OAuthToken.class);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new OAuthToken();
+        }
+    }
 }

@@ -17,6 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -34,5 +37,25 @@ public class AutenticacaoControllerTest {
     public void deveAutenticar() {
         OAuthToken token = TestsHelper.getAccessTokenObject(mvc, Usuarios.ADMIN);
         assertNotNull(token.getAccessToken());
+    }
+
+    @Test
+    public void deveNaoAutenticar() {
+        OAuthToken token = TestsHelper.getAccessTokenObject(mvc, Usuarios.USUARIO_NAO_EXISTENTE);
+        assertNull(token.getAccessToken());
+    }
+
+    @Test
+    public void deveChecarATokenComoInvalida() throws Exception {
+        mvc.perform(
+                post("/oauth/check_token")
+                        .param("token", "teste"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deveAutenticarUsandoClientCredentials() {
+        assertNotNull(TestsHelper
+                .getAccessTokenClientCredentials(mvc, "external-api:4p1").getAccessToken());
     }
 }
