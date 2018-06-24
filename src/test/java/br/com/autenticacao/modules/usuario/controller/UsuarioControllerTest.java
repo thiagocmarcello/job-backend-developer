@@ -44,7 +44,15 @@ public class UsuarioControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(100)))
-                .andExpect(jsonPath("$.nome", is("JOAO DA SILVA")))
+                .andExpect(jsonPath("$.nome", is("ADMIN TESTE")))
                 .andExpect(jsonPath("$.email", is(Usuarios.ADMIN)));
+    }
+
+    @Test
+    public void deveNaoPermitirAcessoUsuarioSuporte() throws Exception {
+        mvc.perform(get("/api/usuario?id=100")
+                .header("Authorization", getAccessToken(mvc, Usuarios.SUPORTE))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 }
