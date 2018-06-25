@@ -1,14 +1,16 @@
 # autenticacao-api
 
-Um serviõ de autenticação usando Spring Boot.
+Um serviço de autenticação usando Spring Boot.
 
 
 ## Configuração de datasource
 
+  ```bash
   datasource:
     url: jdbc:postgresql://localhost:5432/autenticacao
     username: meutreino
     password: meutreino
+   ```
 
 
 ## Start da aplicação
@@ -29,4 +31,4 @@ Na raiz da aplicação, executar:
     username:ADMIN@TESTE.COM.BR
     password:123456
     grant_type:password
-    ```
+   ```
