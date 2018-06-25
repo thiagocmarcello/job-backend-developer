@@ -6,7 +6,7 @@
 
     <groupId>br.com.autenticacao</groupId>
     <artifactId>autenticacao-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,6 +21,7 @@
         <puppycrawl.checkstyle.version>7.3</puppycrawl.checkstyle.version>
         <querydsl.version>4.1.4</querydsl.version>
         <pjdbc.version>9.1-901-1.jdbc4</pjdbc.version>
+        <docker.image.prefix>spring</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -98,6 +99,17 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -178,5 +190,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
