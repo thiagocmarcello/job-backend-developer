@@ -55,3 +55,6 @@ _Na raiz da aplicação, executar:_
  usuario: ADMIN@TESTE.COM.BR
  senha: 123456
  ```
+ 
+ ## Postman
+  - Arquivo `PERSONAL.postman_collection.json` contém informações para request de Token.
