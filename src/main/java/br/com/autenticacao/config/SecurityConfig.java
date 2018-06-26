@@ -39,10 +39,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String[] permitAll = {"/*", "/static/**", "/oauth/authorize", "/oauth/confirm_access"};
+        String[] permitAll = {
+              "/*",
+              "/webjars/**",
+              "/static/**",
+              "/jquery*",
+              "/oauth/authorize",
+              "/oauth/confirm_access"
+        };
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .and()
+                .formLogin()
+                .permitAll()
+                .loginPage("/login")
                 .and()
                 .requestMatchers()
                 .antMatchers(permitAll)

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Autenticação</title>
+    <link href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen"> </link>
+</head>
+<body>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Login</h3>
+                <p sec:authorize="isAuthenticated()">
+                    Você está acessando o sistema como
+                    <span sec:authentication="name">fulano</span>
+                </p>
+                <p sec:authorize="not isAuthenticated()">
+                    Favor realizar login.
+                </p>
+                <p>
+                    <div sec:authorize="not isAuthenticated()">
+                        <a class="btn btn-primary" href="/login">Login</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="btn btn-danger" href="/logout">Logout</a>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</html>

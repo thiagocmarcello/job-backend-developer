@@ -13,3 +13,5 @@ spring:
     username: sa
     password:
     driverClassName: org.hsqldb.jdbcDriver
+    hikari:
+          connectionTestQuery:
